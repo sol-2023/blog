@@ -19,9 +19,18 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '7.0.x'
           include-prerelease: true
 
+      - name: Install EF Tools
+        run: dotnet tool install --global dotnet-ef
+
+      - name: build with dotnet
+        run: dotnet build --configuration Release
+
+      - name: Update database - migration
+        run: dotnet ef database update
+        
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
